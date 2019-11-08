@@ -332,7 +332,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -429,6 +429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3044200ef875b454fa99ee5361fe8273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  halfScreenWidth: 0
+  halfScreenHeight: 0
 --- !u!4 &2012481615
 Transform:
   m_ObjectHideFlags: 0

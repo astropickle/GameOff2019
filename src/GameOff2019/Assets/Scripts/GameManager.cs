@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
 
+    public float halfScreenWidth = 0f;
+    public float halfScreenHeight = 0f;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -19,11 +22,8 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        halfScreenHeight = Camera.main.orthographicSize;
+        halfScreenWidth = Camera.main.aspect * halfScreenHeight;
     }
 }

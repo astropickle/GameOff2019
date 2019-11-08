@@ -23,42 +23,44 @@ public class ShipController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            rb2d.AddForceAtPosition(transform.up, transform.position - new Vector3(-1, -1, 0));
+            rb2d.AddForceAtPosition(transform.up, transform.position - new Vector3(-0.5f, -0.5f, 0));
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            rb2d.AddForceAtPosition(transform.up, transform.position - new Vector3(1, -1, 0));
+            rb2d.AddForceAtPosition(transform.up, transform.position - new Vector3(0.5f, -0.5f, 0));
         }
     }
 
     void FixedUpdate()
     {
-        // Check if player has gone off the screen 
-        //// Top
-        //if (transform.position.y > 12f)
-        //{
-        //    transform.position = new Vector3(transform.position.x, (-transform.position.y) - spriteRenderer.bounds.size.y);
-        //}
-        //// Bottom
-        //else if (transform.position.y < -12f)
-        //{
-        //    transform.position = new Vector3(transform.position.x, (-transform.position.y) + spriteRenderer.bounds.size.y);
-        //}
-        //// Left
-        //else if (transform.position.x < -20f)
-        //{
-        //    transform.position = new Vector3(-transform.position.x + spriteRenderer.bounds.size.x, transform.position.y);
-        //}
-        //// Right
-        //else if (transform.position.x > 20f)
-        //{
-        //    transform.position = new Vector3(-transform.position.x - spriteRenderer.bounds.size.x, transform.position.y);
-        //}
+        CheckIfPlayerIsOffScreen();
+    }
 
-        //if (transform.position.y > 12f || transform.position.y < -12f)
-        //{
-        //    transform.position = new Vector3(transform.position.x, (-transform.position.y) + -(Math.Sign(transform.position.y) * (spriteRenderer.bounds.size.y)));
-        //}
+    private void CheckIfPlayerIsOffScreen()
+    {
+        // Top
+        if (transform.position.y > GameManager.instance.halfScreenHeight + spriteRenderer.bounds.extents.y)
+        {
+            transform.position = new Vector3(transform.position.x, -GameManager.instance.halfScreenHeight - spriteRenderer.bounds.extents.y);
+        }
+
+        // Bottom
+        else if (transform.position.y < -GameManager.instance.halfScreenHeight - spriteRenderer.bounds.extents.y)
+        {
+            transform.position = new Vector3(transform.position.x, GameManager.instance.halfScreenHeight + spriteRenderer.bounds.extents.y);
+        }
+
+        // Right
+        if (transform.position.x > GameManager.instance.halfScreenWidth + spriteRenderer.bounds.extents.x)
+        {
+            transform.position = new Vector3(-GameManager.instance.halfScreenWidth - spriteRenderer.bounds.extents.x, transform.position.y);
+        }
+
+        // Left
+        else if (transform.position.x < -GameManager.instance.halfScreenWidth - spriteRenderer.bounds.extents.x)
+        {
+            transform.position = new Vector3(GameManager.instance.halfScreenWidth + spriteRenderer.bounds.extents.x, transform.position.y);
+        }
     }
 }
