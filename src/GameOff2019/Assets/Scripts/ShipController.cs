@@ -8,6 +8,9 @@ public class ShipController : MonoBehaviour
 
     public float thrusterForce = 2f;
 
+    public GameObject leftThrusterPosition;
+    public  GameObject rightThrusterPosition;
+
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
 
@@ -23,12 +26,12 @@ public class ShipController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            rb2d.AddForceAtPosition(transform.up, transform.position - new Vector3(-0.5f, -0.5f, 0));
+            rb2d.AddForceAtPosition(transform.up, leftThrusterPosition.transform.position);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            rb2d.AddForceAtPosition(transform.up, transform.position - new Vector3(0.5f, -0.5f, 0));
+            rb2d.AddForceAtPosition(transform.up, rightThrusterPosition.transform.position);
         }
     }
 
