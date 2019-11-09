@@ -7,6 +7,8 @@ public class ShipController : MonoBehaviour
 {
 
     public float thrusterForce = 2f;
+    public float angularDrag = 0.05f;
+    public float angularDragWhenBothThrustersActive = 2f;
 
     public GameObject leftThrusterPosition;
     public  GameObject rightThrusterPosition;
@@ -32,6 +34,14 @@ public class ShipController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             rb2d.AddForceAtPosition(transform.up, rightThrusterPosition.transform.position);
+        }
+
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        {
+            rb2d.angularDrag = angularDragWhenBothThrustersActive;
+        } else
+        {
+            rb2d.angularDrag = angularDrag;
         }
     }
 

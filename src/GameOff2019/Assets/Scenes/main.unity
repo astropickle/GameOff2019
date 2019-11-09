@@ -474,6 +474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrusterForce: 2
+  angularDrag: 0.05
+  angularDragWhenBothThrustersActive: 2
   leftThrusterPosition: {fileID: 2019960561}
   rightThrusterPosition: {fileID: 145823597}
 --- !u!50 &1537983134
@@ -490,7 +492,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.1
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 2
