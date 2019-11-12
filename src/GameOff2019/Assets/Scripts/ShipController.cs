@@ -8,13 +8,15 @@ public class ShipController : MonoBehaviour
 
     public float thrusterForce = 2f;
     public float angularDrag = 0.05f;
-    public float angularDragWhenBothThrustersActive = 2f;
+    public float increasedAngularDrag = 2f;
 
     public GameObject leftThrusterPosition;
     public  GameObject rightThrusterPosition;
 
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
+    private bool leftThrusterActive = false;
+    private bool rightThrusterActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,23 +28,23 @@ public class ShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        // Get input for thrusters
+        leftThrusterActive = Input.GetAxis("Left Thruster") > 0;
+        rightThrusterActive = Input.GetAxis("Right Thruster") > 0;
+
+        // Add force for thrusters
+        if (leftThrusterActive)
         {
             rb2d.AddForceAtPosition(transform.up, leftThrusterPosition.transform.position);
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (rightThrusterActive)
         {
             rb2d.AddForceAtPosition(transform.up, rightThrusterPosition.transform.position);
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
-        {
-            rb2d.angularDrag = angularDragWhenBothThrustersActive;
-        } else
-        {
-            rb2d.angularDrag = angularDrag;
-        }
+        // Increase angular drag if both thrusters active
+        rb2d.angularDrag = (leftThrusterActive && rightThrusterActive ? increasedAngularDrag : angularDrag);
     }
 
     void FixedUpdate()
