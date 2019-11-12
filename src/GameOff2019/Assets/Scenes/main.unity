@@ -911,7 +911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thrusterForce: 2
   angularDrag: 0.05
-  angularDragWhenBothThrustersActive: 2
+  increasedAngularDrag: 2
   leftThrusterPosition: {fileID: 2019960561}
   rightThrusterPosition: {fileID: 145823597}
 --- !u!50 &1537983134
