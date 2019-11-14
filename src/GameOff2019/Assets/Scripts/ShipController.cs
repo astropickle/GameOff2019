@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
-
-    public float thrusterForce = 2f;
-    public float angularDrag = 0.05f;
-    public float increasedAngularDrag = 2f;
-
     public GameObject leftThrusterPosition;
     public  GameObject rightThrusterPosition;
+
+    private float thrusterForce = 2f;
+    private float angularDrag = 0.05f;
+    private float increasedAngularDrag = 2f;
 
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
@@ -35,12 +34,12 @@ public class ShipController : MonoBehaviour
         // Add force for thrusters
         if (leftThrusterActive)
         {
-            rb2d.AddForceAtPosition(transform.up, leftThrusterPosition.transform.position);
+            rb2d.AddForceAtPosition(transform.up * thrusterForce, leftThrusterPosition.transform.position);
         }
 
         if (rightThrusterActive)
         {
-            rb2d.AddForceAtPosition(transform.up, rightThrusterPosition.transform.position);
+            rb2d.AddForceAtPosition(transform.up * thrusterForce, rightThrusterPosition.transform.position);
         }
 
         // Increase angular drag if both thrusters active
