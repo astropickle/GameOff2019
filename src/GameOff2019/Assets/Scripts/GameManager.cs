@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public float halfScreenWidth = 0f;
     public float halfScreenHeight = 0f;
 
+    public bool isGameOver = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,5 +27,10 @@ public class GameManager : MonoBehaviour
 
         halfScreenHeight = Camera.main.orthographicSize;
         halfScreenWidth = Camera.main.aspect * halfScreenHeight;
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
     }
 }
