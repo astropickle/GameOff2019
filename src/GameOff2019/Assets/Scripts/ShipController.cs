@@ -97,4 +97,12 @@ public class ShipController : MonoBehaviour
             GameManager.instance.GameOver();
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Exit")
+        {
+            GameManager.instance.LevelComplete();
+        }
+    }
 }
