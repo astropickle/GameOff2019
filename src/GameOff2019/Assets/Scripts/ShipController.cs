@@ -18,6 +18,8 @@ public class ShipController : MonoBehaviour
 
     private bool leftThrusterActive = false;
     private bool rightThrusterActive = false;
+    private float leftThrusterInput;
+    private float rightThrusterInput;
     private bool playerIsOffScreen = false;
 
     // Start is called before the first frame update
@@ -32,28 +34,31 @@ public class ShipController : MonoBehaviour
     void Update()
     {
         // Get input for thrusters
-        leftThrusterActive = Input.GetAxis("Left Thruster") > 0;
-        rightThrusterActive = Input.GetAxis("Right Thruster") > 0;
+        leftThrusterInput = Input.GetAxis("Left Thruster");
+        rightThrusterInput = Input.GetAxis("Right Thruster");
 
         // Add force for thrusters
-        // TODO: Optimize this, its pointless to set bools to false every single loop
-        if (leftThrusterActive)
+        if (leftThrusterInput > 0)
         {
-            rb2d.AddForceAtPosition(transform.up * thrusterForce, leftThrusterPosition.transform.position);
+            leftThrusterActive = true;
+            rb2d.AddForceAtPosition(transform.up * (thrusterForce * leftThrusterInput), leftThrusterPosition.transform.position);
             animator.SetBool("Left Thruster Active", true);
         }
-        else
+        else if (leftThrusterActive && leftThrusterInput == 0)
         {
+            leftThrusterActive = false;
             animator.SetBool("Left Thruster Active", false);
         }
 
-        if (rightThrusterActive)
+        if (rightThrusterInput > 0)
         {
-            rb2d.AddForceAtPosition(transform.up * thrusterForce, rightThrusterPosition.transform.position);
+            rightThrusterActive = true;
+            rb2d.AddForceAtPosition(transform.up * (thrusterForce * rightThrusterInput), rightThrusterPosition.transform.position);
             animator.SetBool("Right Thruster Active", true);
         }
-        else
+        else if (rightThrusterActive && rightThrusterInput == 0)
         {
+            rightThrusterActive = false;
             animator.SetBool("Right Thruster Active", false);
         }
 
