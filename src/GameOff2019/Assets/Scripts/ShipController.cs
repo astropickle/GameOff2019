@@ -11,13 +11,13 @@ public class ShipController : MonoBehaviour
     private float thrusterForce = 2f;
     private float angularDrag = 0.05f;
     private float increasedAngularDrag = 2f;
+    // private float linearDrag = 0.05f;
+    // private float increasedLinearDrag = 0.5f;
 
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    private bool leftThrusterActive = false;
-    private bool rightThrusterActive = false;
     private float leftThrusterInput;
     private float rightThrusterInput;
     private bool playerIsOffScreen = false;
@@ -37,33 +37,31 @@ public class ShipController : MonoBehaviour
         leftThrusterInput = Input.GetAxis("Left Thruster");
         rightThrusterInput = Input.GetAxis("Right Thruster");
 
-        // Add force for thrusters
+        // Increase angular drag if both thrusters active
+        rb2d.angularDrag = (leftThrusterInput > 0 && rightThrusterInput > 0 ? increasedAngularDrag : angularDrag);
+
+        // Increase linear drag if both thursters active
+        // rb2d.drag = (leftThrusterInput > 0 && rightThrusterInput > 0 ? increasedLinearDrag : linearDrag);
+
+        // Handle left thruster input
         if (leftThrusterInput > 0)
         {
-            leftThrusterActive = true;
             rb2d.AddForceAtPosition(transform.up * (thrusterForce * leftThrusterInput), leftThrusterPosition.transform.position);
-            animator.SetBool("Left Thruster Active", true);
         }
-        else if (leftThrusterActive && leftThrusterInput == 0)
-        {
-            leftThrusterActive = false;
-            animator.SetBool("Left Thruster Active", false);
-        }
+        animator.SetBool("Left Thruster Active", leftThrusterInput > 0);
 
+        // Handle right thruster input
         if (rightThrusterInput > 0)
         {
-            rightThrusterActive = true;
             rb2d.AddForceAtPosition(transform.up * (thrusterForce * rightThrusterInput), rightThrusterPosition.transform.position);
-            animator.SetBool("Right Thruster Active", true);
         }
-        else if (rightThrusterActive && rightThrusterInput == 0)
-        {
-            rightThrusterActive = false;
-            animator.SetBool("Right Thruster Active", false);
-        }
+        animator.SetBool("Right Thruster Active", rightThrusterInput > 0);
 
-        // Increase angular drag if both thrusters active
-        rb2d.angularDrag = (leftThrusterActive && rightThrusterActive ? increasedAngularDrag : angularDrag);
+        // Let the game manager know the player has started the current level
+        if ((leftThrusterInput > 0 || rightThrusterInput > 0) && GameManager.instance.hasStartedCurrentLevel == false)
+        {
+            GameManager.instance.hasStartedCurrentLevel = true;
+        }
     }
 
     void FixedUpdate()
@@ -103,6 +101,7 @@ public class ShipController : MonoBehaviour
         }
     }
 
+    // Collision detection
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Exit")
